@@ -1,7 +1,7 @@
-package com.devops.aws.externalproptest;
+package com.devops.aws.tests.externalproptest;
 
-import com.devops.aws.jms.FakeJmsBroker;
-import com.devops.aws.test.externalprops.ExternalProperties;
+import com.devops.aws.tests.jms.FakeJmsBroker;
+import com.devops.aws.tests.externalprops.ExternalPropertiesMultiFile;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +12,9 @@ import static org.junit.Assert.assertEquals;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ExternalProperties.class)
+@ContextConfiguration(classes = ExternalPropertiesMultiFile.class)
 
-public class ExternalPropertyTest {
+public class ExternaPropertyMultiFileTest {
 
     @Autowired
     FakeJmsBroker fakeJmsBroker;
@@ -24,6 +24,6 @@ public class ExternalPropertyTest {
         assertEquals("10.10.10.123", fakeJmsBroker.getUrl());
         assertEquals(3330, fakeJmsBroker.getPort().intValue());
         assertEquals("Vero", fakeJmsBroker.getUser());
-        assertEquals("Baggins", fakeJmsBroker.getPassword());
+        assertEquals("&%$)(*&#^!@!@#$", fakeJmsBroker.getPassword());
     }
 }

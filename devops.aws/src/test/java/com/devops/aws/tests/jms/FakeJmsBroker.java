@@ -1,4 +1,4 @@
-package com.devops.aws.jms;
+package com.devops.aws.tests.jms;
 
 
 public class FakeJmsBroker {
