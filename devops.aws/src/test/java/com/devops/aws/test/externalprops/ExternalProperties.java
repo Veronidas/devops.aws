@@ -1,43 +1,26 @@
 package com.devops.aws.test.externalprops;
 
 import com.devops.aws.jms.FakeJmsBroker;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.Environment;
 
 @Configuration
 @PropertySource("classpath:testing.properties")
 public class ExternalProperties {
-
-    @Value("${vero.jms.server}")
-    String jmsServer;
-
-    @Value("${vero.jms.port}")
-    Integer jmsPort;
-
-    @Value("${vero.jms.user}")
-    String jmsUser;
-
-    @Value("${vero.jms.password}")
-    String jmsPassword;
-
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer properties() {
-        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer
-                = new PropertySourcesPlaceholderConfigurer();
-        return propertySourcesPlaceholderConfigurer;
-    }
+    @Autowired
+    Environment env;
 
     @Bean
     public FakeJmsBroker fakeJmsBroker(){
         FakeJmsBroker fakeJmsBroker = new FakeJmsBroker();
-        fakeJmsBroker.setUrl(jmsServer);
-        fakeJmsBroker.setPort(jmsPort);
-        fakeJmsBroker.setUser(jmsUser);
-        fakeJmsBroker.setPassword(jmsPassword);
+        fakeJmsBroker.setUrl(env.getProperty("vero.jms.server"));
+        fakeJmsBroker.setPort(env.getRequiredProperty("vero.jms.port", Integer.class));
+        fakeJmsBroker.setUser(env.getProperty("vero.jms.user"));
+        fakeJmsBroker.setPassword(env.getProperty("vero.jms.password"));
         return fakeJmsBroker;
     }
 }
